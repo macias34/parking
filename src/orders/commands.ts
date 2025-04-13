@@ -1,25 +1,26 @@
+import { createZodDto } from 'nestjs-zod';
 import { z } from 'zod';
 
 const OrderLine = z
   .object({
-    productId: z.string(),
+    productId: z.string().uuid(),
     price: z.number(),
     quantity: z.number(),
   })
   .strict();
 
-export const CreateOrder = z
-  .object({
-    orderLines: z.array(OrderLine),
-  })
-  .strict();
+export class CreateOrder extends createZodDto(
+  z
+    .object({
+      orderLines: z.array(OrderLine),
+    })
+    .strict(),
+) {}
 
-export const AddProductToOrder = z
-  .object({
-    orderLines: z.array(OrderLine),
-  })
-  .strict();
-
-export type CreateOrder = z.infer<typeof CreateOrder>;
-export type AddProductToOrder = z.infer<typeof AddProductToOrder>;
-export type OrderLine = z.infer<typeof OrderLine>;
+export class AddProductToOrder extends createZodDto(
+  z
+    .object({
+      orderLines: z.array(OrderLine),
+    })
+    .strict(),
+) {}

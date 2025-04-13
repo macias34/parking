@@ -17,6 +17,6 @@ export class OrderMapper {
       totalPrice: order.totalPrice(),
     };
 
-    return queries.Order.parse(candidateDto);
+    return candidateDto;
   }
 }

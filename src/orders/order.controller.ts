@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { OrderService } from './order.service';
-import { CreateOrder } from './commands';
+import { AddProductToOrder, CreateOrder } from './commands';
 import { Order } from './queries';
 
 @Controller('orders')
@@ -15,7 +15,7 @@ export class OrderController {
   @Patch(':id')
   async addProductToOrder(
     @Param('id') orderId: string,
-    @Body() addProductToOrder: CreateOrder,
+    @Body() addProductToOrder: AddProductToOrder,
   ): Promise<void> {
     await this.orderService.addProductToOrder(orderId, addProductToOrder);
   }
