@@ -1,7 +1,8 @@
+import { DB } from 'src/common/database/database.types';
 import { uuid } from '../common';
 
 export class Order {
-  private readonly orderLines: OrderLine[] = [];
+  private orderLines: OrderLine[] = [];
   constructor(private readonly id: string) {}
 
   add(productId: string, quantity: number, price: number): void {
@@ -30,6 +31,26 @@ export class Order {
       id: this.id,
       orderLines: this.orderLines.map((line) => line._state),
     };
+  }
+
+  static _reconstruct(data: {
+    order: DB['order'];
+    orderLines: DB['order_line'][];
+  }): Order {
+    const order = new Order(data.order.id);
+    const orderLines: OrderLine[] = data.orderLines.map(
+      (line) =>
+        new OrderLine(
+          line.id,
+          line.order_id,
+          line.product_id,
+          line.price,
+          line.quantity,
+        ),
+    );
+
+    order.orderLines = orderLines;
+    return order;
   }
 }
 

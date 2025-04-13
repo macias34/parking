@@ -3,10 +3,6 @@
  * Please do not edit it manually.
  */
 
-import type { ColumnType } from "kysely";
-
-export type Numeric = ColumnType<string, number | string, number | string>;
-
 export interface Order {
   id: string;
 }
@@ -14,7 +10,7 @@ export interface Order {
 export interface OrderLine {
   id: string;
   order_id: string;
-  price: Numeric;
+  price: number;
   product_id: string;
   quantity: number;
 }
