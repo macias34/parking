@@ -5,12 +5,12 @@ import { patchNestJsSwagger } from 'nestjs-zod';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
+  app.setGlobalPrefix('api');
   patchNestJsSwagger();
 
   const config = new DocumentBuilder().setTitle('Parking API').build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, documentFactory);
+  SwaggerModule.setup('/api/docs', app, documentFactory);
 
   await app.listen(process.env.PORT ?? 3000);
 }
